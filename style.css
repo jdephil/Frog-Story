@@ -1,0 +1,67 @@
+.container {
+    display: relative;
+    height: 100vh;
+
+
+}
+
+.imgdivs {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    
+}
+
+#tree-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: 520px; */
+    
+}
+
+#fly-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: 29px; */
+}
+
+#pond-div {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    /* width: 520px; */
+}
+
+#frog-div{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    /* width: 105px; */
+}
+
+#frog-img {
+    width: 100%;
+    max-width: 105px;
+    height: auto;
+}
+
+#pond-img {
+    width: 100%;
+    max-width: 520px;
+    height: auto;
+}
+
+
+#tree-img {
+    width: 100%;
+    max-width: 520px;
+    height: auto;
+}
+
+#fly-img {
+    width: 100%;
+    max-width: 29px;
+    height: auto;
+}
