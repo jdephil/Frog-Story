@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     /*---Game logic---*/
     let gameOver = false
     let introText = [
-        "I have lived alone in this pond my whole life. I don't eat the flies anymore. They are moy only companions. Any yet...", 
+        "I have lived alone in this pond my whole life. I don't eat the flies anymore. They are my only companions. Any yet...", 
         "They plague me with their indifference and die quickly. This is not where I was meant to be. What do I do...", 
         "Click the flies to talk to them. Click the pond to drink some water. Press 'q' to leave and find another pond."
     ]
@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ""
     ]
     let clickCount = 0
+
     
 
     /*---Event Listeners---*/
@@ -35,17 +36,19 @@ document.addEventListener('DOMContentLoaded', function() {
     let init = () => {
         console.log('init check')
         gameOver = false;
-        document.getElementById('main').innerHTML += "<audio src='fly-buzz.mp3'> </audio>"
+        //document.getElementById('main').innerHTML += "<audio src='fly-buzz.mp3' type='audio/mpeg'> </audio>"
+        //document.querySelector('audio').play()
         //add code to move frog
         //add code to set gameboard back to normal
-        frog.addEventListener('click', firstScene)
-        console.log('event check')
-        firstScene()
+        document.getElementById('frog-img').addEventListener('click', firstScene)
+        
+        
     }
 
     function firstScene() {
-        console.log(clickCount)
+       
         console.log("scene check")
+        
             if (clickCount === 0) {
                 console.log(clickCount)
                 frogText.innerText = introText[0]
