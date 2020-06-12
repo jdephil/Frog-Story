@@ -2,6 +2,14 @@ body {
     margin: 0 auto;
 }
 
+h3 {
+    color: lightgrey;
+    margin-left: 30%;
+    margin-top: 10%;
+    z-index: 2;
+    position: absolute;
+}
+
 footer {
     margin: 55% 0% 0% 50%;
     display: inline-block;
