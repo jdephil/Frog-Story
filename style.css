@@ -1,67 +1,64 @@
+body {
+    margin: 0 auto;
+}
+
 .container {
-    display: relative;
-    height: 100vh;
+    position: relative;
+    height: 100%;
 
 
 }
 
 .imgdivs {
-    display: flex;
+    display: inline-block;
     position: absolute;
     justify-content: center;
     
 }
 
 #tree-div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* width: 520px; */
+    margin: 20% 0% 10% 26%;
+    
     
 }
 
 #fly-div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* width: 29px; */
+    margin: 30% 0% 20% 70%;
+    
 }
 
 #pond-div {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    /* width: 520px; */
+    margin: 54% 10% 20% 39%;
+    width: 666px;
+    
 }
 
 #frog-div{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    /* width: 105px; */
+    margin: 50% 0% 0% 67%;
+    
 }
 
 #frog-img {
     width: 100%;
-    max-width: 105px;
+    max-width: 90px;
     height: auto;
 }
 
 #pond-img {
     width: 100%;
-    max-width: 520px;
+    max-width: 700px;
     height: auto;
 }
 
 
 #tree-img {
     width: 100%;
-    max-width: 520px;
+    max-width: 400px;
     height: auto;
 }
 
 #fly-img {
     width: 100%;
-    max-width: 29px;
+    max-width: 10px;
     height: auto;
 }
