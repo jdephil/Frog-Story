@@ -67,8 +67,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let init = () => {
         console.log('init check')
         document.getElementById('footer').style.visibility = 'visible'
-        //document.getElementById('main').innerHTML += "<audio src='fly-buzz.mp3' type='audio/mpeg'> </audio>"
-        //document.querySelector('audio').play()
+        document.getElementsByTagName('head')[0].innerHTML += "<audio src='fly-buzz.mp3' type='audio/mpeg'> </audio>"
+        document.querySelector('audio').play()
         //add frog bounce animation
         document.getElementById('frog-img').addEventListener('click', introScene)
         document.querySelector('h3').innerText = ''
