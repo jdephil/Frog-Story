@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let flies = document.getElementById('flies')
     let pond = document.getElementById('pond-img')
-    let btn = document.querySelector('button')
+    let btn = document.getElementById('reset')
     let frogText = document.getElementById('dialogue')
    
 
@@ -11,16 +11,28 @@ document.addEventListener('DOMContentLoaded', function() {
     let gameOver = false
     let clickCount = 0
     let clickCountFlies = 0
+    let clickCountPond = 0
     let introText = [
-        "I have lived alone in this pond my whole life. I don't eat the flies anymore. They are my only companions. Any yet...", 
+        "I have lived alone in this pond my whole life. I don't eat the flies anymore. They are my only companions. And yet...", 
         "They plague me with their indifference and die quickly. This is not where I was meant to be. What do I do...", 
         "Click the flies to talk to them. Click the pond to drink some water. Press 'q' to leave and find another pond."
     ]
     let flyText = [
         "My friends...", 
         "Please. I can't take the buzzing, the endless buzzing...", 
-        "I call upon you. This must END...", 
-        "I can feel the weight of a million tiny bodies pressing upon me. But the silence! It settles in as they fill my ears with their unborn children. Finally..."
+        "I call upon you.",
+        "This must END...", 
+        "I can feel the weight of a million tiny bodies pressing upon me. But the silence! It settles in as they fill my ears with their unborn children. Finally...", 
+        "Press 'y' to let the flies use frog as an incubator. Press 'n' to dive underwater in an attempt to shake them off.", 
+        "I see it now. My life's purpose is to serve you and become part of you, my flying friends. If we are together, I am never alone. Please use me as you will. I am finally free.", 
+        "No! The flies have climbed into my airways! I can't hold my breath for much longer. Is that...? Yes, I see Death swimming towards me."
+    ]
+    let pondText = [
+        "I am a king! I will have my revenge upon this world.", 
+        "I will crush you all!",
+        "Press 'y' to eat the flies. Press 'n' to let them live.", 
+        "Finally I am alone. All alone... What have I done?",
+        "No, I cannot bear the thought. A king? What kind of king destroys his kingdom? The sun is warm, the water is cool, and I am grateful."
     ]
    
 
@@ -28,26 +40,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /*---Event Listeners---*/
 
-    //btn.addEventListener('click', reset)
+    
     document.addEventListener('keydown', function(e) {
         if (e.keyCode === 32) {
             init();
         }
     })
 
+    
+    let winGame = () => {
+        document.querySelector('h3').innerText = "You win! Play again?"
+        document.querySelector('h3').style.color = "goldenrod"
+       
+    }
+
+    let loseGame = () => {
+        document.querySelector('h3').innerText = "You lose! Play again?"
+        document.querySelector('h3').style.color = "red"
+    }
+
+
+   let reset = () => {
+    document.location.href = ""
+   }
+
     let init = () => {
         console.log('init check')
-        gameOver = false;
         document.getElementById('footer').style.visibility = 'visible'
         //document.getElementById('main').innerHTML += "<audio src='fly-buzz.mp3' type='audio/mpeg'> </audio>"
         //document.querySelector('audio').play()
-        //add code to move frog
+        //add frog bounce animation
         document.getElementById('frog-img').addEventListener('click', introScene)
         document.querySelector('h3').innerText = ''
        
     }
 
-    function introScene() {        
+    function introScene() { 
+        //animate flies to fly around       
             if (clickCount === 0) {
                 frogText.innerText = introText[0]
                 clickCount++
@@ -59,7 +88,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 clickCount++
                 document.getElementById('flies').addEventListener('click', flySwarm)
                 pond.addEventListener('click', drinkWater)
-                document.addEventListener('keydown', leaveTown)
+                document.addEventListener('keydown', function(e) {
+                    if (e.key == 'q') {
+                        leaveTown()
+                    }
+                })
             }
     }
 
@@ -79,64 +112,97 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (clickCountFlies === 3) {
             frogText.innerText = flyText[3]
             flies.innerHTML = "<img id='black-circle' src='images/circle-cropped.png' alt='black circle'>"
+            //document.querySelector('audio').stop()
             clickCountFlies++
+            document.getElementById('black-circle').addEventListener('click', function() {
+                if (clickCountFlies === 4) {
+                    frogText.innerText = flyText[4]
+                    document.getElementById('black-circle').style.maxWidth = '100%'
+                    document.getElementById('black-circle').style.width = '8000px'
+                    document.getElementById('black-circle').style.zIndex = '2'
+                    document.getElementById('black-circle').style.margin = '0'
+                    document.getElementById('dialogue').style.marginTop = '5%'
+                    clickCountFlies++          
+                } else if (clickCountFlies === 5) {
+                    frogText.innerText = flyText[5]
+                    clickCountFlies++
+                            document.addEventListener('keydown', function(e) {
+                            if (e.key == 'y') {
+                                frogText.innerText = flyText[6]
+                                winGame()                                
+                            } else if (e.key == 'n') {
+                                frogText.innerText = flyText[7]
+                                loseGame()                                
+                            }
+                        })
+                }
+            }) 
         } 
         
-        document.getElementById('black-circle').addEventListener('click', function() {
-            document.getElementById('black-circle').style.maxWidth = '1000px'          
-                document.addEventListener('keydown', function(e) {
-                    if (e.key == 'y') {
-                        console.log('you win')
-                        //run win statement
-                        //endGame
-                    } else if (e.key == 'n') {
-                        console.log('you lose')
-                        //run lose statement
-                        //endGame
-                    }
-                })
-        }) 
+    
     }
-        //increase volume
-        //replace flies with black circle
-        //turn screen black       
+        
+        
+    btn.addEventListener('click', reset)       
     
 
     let drinkWater = () => {
-        //increase size of frog
-        //decrease size of pond
+          
+        switch (clickCountPond) {
+            case 0:
+                document.getElementById('frog-img').style.maxWidth = "200px"
+                document.getElementById('frog-img').style.margin = "28% 0 0 35%"
+                document.getElementById('pond-img').style.maxWidth = "450px"
+                document.getElementById('pond-img').style.margin = "34% 0% 0% 50%"
+                frogText.innerText = pondText[0]
+                clickCountPond++
+            break;
+            case 1:
+                document.getElementById('frog-img').style.maxWidth = "400px"
+                document.getElementById('frog-img').style.margin = "15% 0 0 21%"
+                document.getElementById('pond-img').style.maxWidth = "100px"
+                document.getElementById('pond-img').style.margin = "34% 0% 0% 60%"
+                frogText.innerText = pondText[1]
+                clickCountPond++
+                break;
+            case 2:
+                frogText.innerText = pondText[2]
+                clickCountPond++
+                document.addEventListener('keydown', function(e) {
+                    if (e.key == 'y') {
+                        frogText.innerText = pondText[3]
+                        document.getElementById('flies').style.visibility = "hidden"
+                        //document.querySelector('audio').stop()
+                        clickCountPond++
+                        loseGame()                                
+                    } else if (e.key == 'n') {
+                        frogText.innerText = pondText[4]
+                        document.getElementById('frog-img').style.maxWidth = "90px"
+                        document.getElementById('frog-img').style.margin = "32% 0% 0% 67%"
+                        document.getElementById('pond-img').style.maxWidth = "700px"
+                        document.getElementById('pond-img').style.margin = "34% 0% 0% 43%"
+                        clickCountPond++
+                        winGame()                                
+                    }
+                })
+                break;
+            }
         //add slurp sound
-        //run kingText
-        //add event listeners for y/n
-        //run win or lose statement based on y/n
-        
     }
 
     let leaveTown = () => {
-        //clear all divs
-        //run deadText
-        gameOver = true
+        //document.querySelector('audio').stop()
+        pond.style.visibility = "hidden"
+        flies.style.visibility = "hidden"
+        document.getElementById('tree-img').style.visibility = "hidden"
+        frogText.innerText = "I have been hopping for days. No food. No water. There is nothing out here. No one else. What is this empty place?"
+        document.getElementById('frog-img').style.maxWidth = "20px"
+        document.getElementById('frog-img').style.margin = "25% 0% 0% 50%"
+        loseGame()
     }
 
-    let reset = () => {
-        //reset gameboard
-    }
+  
 
-    let winGame = () => {
-        //text "you win"
-        gameOver = true
-        endGame()
-    }
-
-    let loseGame = () => {
-        //text "you lose"
-        gameOver = true
-        endGame()
-    }
-
-    let endGame = () => {
-        //text "play again?"
-        //make reset button more prominent
-    }
+    
 
 })
