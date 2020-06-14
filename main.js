@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let pond = document.getElementById('pond-img')
     let btn = document.getElementById('reset')
     let frogText = document.getElementById('dialogue')
+    let sound2 = document.getElementById('sound')
    
 
     /*---Game logic---*/
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
 
-    /*---Event Listeners---*/
+    /*---Functions---*/
 
     
     document.addEventListener('keydown', function(e) {
@@ -67,8 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let init = () => {
         console.log('init check')
         document.getElementById('footer').style.visibility = 'visible'
-        document.getElementsByTagName('head')[0].innerHTML += "<audio src='fly-buzz.mp3' type='audio/mpeg'> </audio>"
-        document.querySelector('audio').play()
+        sound2.play()
         //add frog bounce animation
         document.getElementById('frog-img').addEventListener('click', introScene)
         document.querySelector('h3').innerText = ''
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (clickCountFlies === 3) {
             frogText.innerText = flyText[3]
             flies.innerHTML = "<img id='black-circle' src='images/circle-cropped.png' alt='black circle'>"
-            //document.querySelector('audio').stop()
+            sound2.pause()
             clickCountFlies++
             document.getElementById('black-circle').addEventListener('click', function() {
                 if (clickCountFlies === 4) {
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (e.key == 'y') {
                         frogText.innerText = pondText[3]
                         document.getElementById('flies').style.visibility = "hidden"
-                        //document.querySelector('audio').stop()
+                        sound2.pause()
                         clickCountPond++
                         loseGame()                                
                     } else if (e.key == 'n') {
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     let leaveTown = () => {
-        //document.querySelector('audio').stop()
+        sound2.pause()
         pond.style.visibility = "hidden"
         flies.style.visibility = "hidden"
         document.getElementById('tree-img').style.visibility = "hidden"
