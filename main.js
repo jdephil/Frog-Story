@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
        
     }
 
-    function introScene() { 
+    let introScene = () => { 
         //animate flies to fly around       
             if (clickCount === 0) {
                 frogText.innerText = introText[0]
@@ -97,6 +97,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     let flySwarm = () => {
+        pond.removeEventListener('click', drinkWater)
+        document.removeEventListener('keydown', function(e) {
+            if (e.key == 'q') {
+                leaveTown()
+            }
+        })
         if (clickCountFlies === 0) {
             frogText.innerText = flyText[0]
             flies.innerHTML += "<img class='flyImgs imgs' id='fly-img6' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img7' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img8' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img9' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img10' src='images/fly1.png' alt='Fly Image'>"
@@ -147,7 +153,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
 
     let drinkWater = () => {
-          
+        document.getElementById('flies').removeEventListener('click', flySwarm)
+        document.removeEventListener('keydown', function(e) {
+            if (e.key == 'q') {
+                leaveTown()
+            }
+        })
         switch (clickCountPond) {
             case 0:
                 document.getElementById('frog-img').style.maxWidth = "200px"
@@ -191,6 +202,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     let leaveTown = () => {
+        document.getElementById('flies').removeEventListener('click', flySwarm)
+        pond.removeEventListener('click', drinkWater)
         sound2.pause()
         pond.style.visibility = "hidden"
         flies.style.visibility = "hidden"
