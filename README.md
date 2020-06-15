@@ -35,3 +35,6 @@ Fly:
 
 Fly Sounds:
 https://www.youtube.com/watch?v=bcuKTheCcsE
+
+Drink Sound:
+http://soundbible.com/1527-Slurp.html

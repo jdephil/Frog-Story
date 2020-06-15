@@ -31,7 +31,9 @@ h3 {
     width: 100%;
     max-width: 90px;
     height: auto;
-    margin: 32% 0% 0% 67%;
+    margin-top: 32%; 
+    margin-left: 67%;
+    
 }
 
 #pond-img {

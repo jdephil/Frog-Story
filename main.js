@@ -65,15 +65,44 @@ document.addEventListener('DOMContentLoaded', function() {
     document.location.href = ""
    }
 
+
     let init = () => {
         console.log('init check')
         document.getElementById('footer').style.visibility = 'visible'
         sound2.play()
         //add frog bounce animation
+        frogJump()
         document.getElementById('frog-img').addEventListener('click', introScene)
         document.querySelector('h3').innerText = ''
        
     }
+
+
+   let frogJump = () => {
+    let frogAni = document.getElementById('frog-img')
+    let pos = 32
+    let gravity = false
+    let jump = () => {
+        if (pos > 30 && gravity === false) {
+            pos--
+            frogAni.style.marginTop = pos + '%'
+        } else if (pos <= 30 && gravity === false) {
+            gravity = true
+        } else if (gravity === true && pos <= 32) {
+            pos++
+            if (pos >= 32) {
+                pos = 32
+                gravity = false
+            }
+           
+            frogAni.style.marginTop = pos + '%'
+            
+        }  
+      
+    
+   }
+   let si = setInterval(jump, 100)
+}
 
     let introScene = () => { 
         //animate flies to fly around       
@@ -160,6 +189,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         switch (clickCountPond) {
+           
             case 0:
                 document.getElementById('frog-img').style.maxWidth = "200px"
                 document.getElementById('frog-img').style.margin = "28% 0 0 35%"
