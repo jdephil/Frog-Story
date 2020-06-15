@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let clickCount = 0
     let clickCountFlies = 0
     let clickCountPond = 0
+    let frogAniRunning = false
     let introText = [
         "I have lived alone in this pond my whole life. I don't eat the flies anymore. They are my only companions. And yet...", 
         "They plague me with their indifference and die quickly. This is not where I was meant to be. What do I do...", 
@@ -33,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "I will crush you all!",
         "Press 'y' to eat the flies. Press 'n' to let them live.", 
         "Finally I am alone. All alone... What have I done?",
-        "No, I cannot bear the thought. A king? What kind of king destroys his kingdom? The sun is warm, the water is cool, and I am grateful."
+        "No, I cannot bear the thought. What kind of king destroys his kingdom? The sun is warm, the water is cool, and I am grateful."
     ]
    
 
@@ -82,7 +83,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let frogAni = document.getElementById('frog-img')
     let pos = 32
     let gravity = false
+    frogAniRunning = true
     let jump = () => {
+        if (frogAniRunning === true) {
         if (pos > 30 && gravity === false) {
             pos--
             frogAni.style.marginTop = pos + '%'
@@ -98,7 +101,9 @@ document.addEventListener('DOMContentLoaded', function() {
             frogAni.style.marginTop = pos + '%'
             
         }  
-      
+    } else {
+        return null
+    }
     
    }
    let si = setInterval(jump, 100)
@@ -124,6 +129,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
             }
     }
+
+    
 
     let flySwarm = () => {
         pond.removeEventListener('click', drinkWater)
@@ -182,14 +189,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
 
     let drinkWater = () => {
+        
         document.getElementById('flies').removeEventListener('click', flySwarm)
         document.removeEventListener('keydown', function(e) {
             if (e.key == 'q') {
                 leaveTown()
             }
         })
+        frogAniRunning = false
         switch (clickCountPond) {
-           
+            
             case 0:
                 document.getElementById('frog-img').style.maxWidth = "200px"
                 document.getElementById('frog-img').style.margin = "28% 0 0 35%"
@@ -232,6 +241,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     let leaveTown = () => {
+        frogAniRunning = false
         document.getElementById('flies').removeEventListener('click', flySwarm)
         pond.removeEventListener('click', drinkWater)
         sound2.pause()
