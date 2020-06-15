@@ -71,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('init check')
         document.getElementById('footer').style.visibility = 'visible'
         sound2.play()
-        //add frog bounce animation
         frogJump()
         document.getElementById('frog-img').addEventListener('click', introScene)
         document.querySelector('h3').innerText = ''
@@ -109,6 +108,28 @@ document.addEventListener('DOMContentLoaded', function() {
    let si = setInterval(jump, 100)
 }
 
+    let frogShrink = () => {
+        console.log('shrink check')
+        let wid = 90
+        let shrink = () => {
+            if (wid <= 90) {
+                wid--
+                document.getElementById('frog-img').style.maxWidth = wid + 'px'
+            } else if (wid < 20) {
+                clearInterval(shrinkInterval)
+            }
+        }
+        let shrinkInterval = (shrink, 1000)
+    }
+
+    // let flyBuzz = () => {
+    //     let flyAni = flies.children
+    //     let mar = flies.children.margin
+    //     let flying = () => {
+    //         if (mar > "")
+    //     }
+    // }
+
     let introScene = () => { 
         //animate flies to fly around       
             if (clickCount === 0) {
@@ -130,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
     }
 
-    
+
 
     let flySwarm = () => {
         pond.removeEventListener('click', drinkWater)
@@ -240,8 +261,11 @@ document.addEventListener('DOMContentLoaded', function() {
         //add slurp sound
     }
 
+   
+
     let leaveTown = () => {
         frogAniRunning = false
+        frogShrink()
         document.getElementById('flies').removeEventListener('click', flySwarm)
         pond.removeEventListener('click', drinkWater)
         sound2.pause()
@@ -249,12 +273,12 @@ document.addEventListener('DOMContentLoaded', function() {
         flies.style.visibility = "hidden"
         document.getElementById('tree-img').style.visibility = "hidden"
         frogText.innerText = "I have been hopping for days. No food. No water. There is nothing out here. No one else. What is this empty place?"
-        document.getElementById('frog-img').style.maxWidth = "20px"
+        //document.getElementById('frog-img').style.maxWidth = "20px"
         document.getElementById('frog-img').style.margin = "25% 0% 0% 50%"
         loseGame()
     }
 
-  
+    
 
     
 
