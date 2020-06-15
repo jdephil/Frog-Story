@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let pond = document.getElementById('pond-img')
     let btn = document.getElementById('reset')
     let frogText = document.getElementById('dialogue')
-    let sound2 = document.getElementById('sound')
+    let flySound = document.getElementById('sound')
+    let drinkSound = document.getElementById('drink-sound')
    
 
     /*---Game logic---*/
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let clickCount = 0
     let clickCountFlies = 0
     let clickCountPond = 0
-    let frogAniRunning = false
+    let frogJumpRunning = false
     let introText = [
         "I have lived alone in this pond my whole life. I don't eat the flies anymore. They are my only companions. And yet...", 
         "They plague me with their indifference and die quickly. This is not where I was meant to be. What do I do...", 
@@ -23,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "My friends...", 
         "Please. I can't take the buzzing, the endless buzzing...", 
         "I call upon you.",
-        "This must END...", 
+        "This must END.", 
         "I can feel the weight of a million tiny bodies pressing upon me. But the silence! It settles in as they fill my ears with their unborn children. Finally...", 
         "Press 'y' to let the flies use frog as an incubator. Press 'n' to dive underwater in an attempt to shake them off.", 
         "I see it now. My life's purpose is to serve you and become part of you, my flying friends. If we are together, I am never alone. Please use me as you will. I am finally free.", 
@@ -70,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let init = () => {
         console.log('init check')
         document.getElementById('footer').style.visibility = 'visible'
-        sound2.play()
+        flySound.play()
         frogJump()
         document.getElementById('frog-img').addEventListener('click', introScene)
         document.querySelector('h3').innerText = ''
@@ -82,9 +83,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let frogAni = document.getElementById('frog-img')
     let pos = 32
     let gravity = false
-    frogAniRunning = true
+    frogJumpRunning = true
     let jump = () => {
-        if (frogAniRunning === true) {
+        if (frogJumpRunning === true) {
         if (pos > 30 && gravity === false) {
             pos--
             frogAni.style.marginTop = pos + '%'
@@ -108,10 +109,36 @@ document.addEventListener('DOMContentLoaded', function() {
    let si = setInterval(jump, 100)
 }
 
+    // let flyBuzz = () => {
+    //     let flyAni = flies.flyImgs
+    //     let gravity = false
+    //     let marTop = flies.flyImgs.marginTop
+    //     let marLeft = flies.flyImgs.marginLeft
+    //     let flying = () => {
+    //         if (marTop > 20 && gravity === false) {
+    //             marTop--
+    //             flyAni.style.marginTop = marTop + '%'
+    //         } else if (pos <= 25 && gravity === false) {
+    //             gravity = true
+    //         } else if (gravity === true && marTop <= 32) {
+    //             marTop++
+    //             if (marTop >= 32) {
+    //                 marTop = 32
+    //                 gravity = false
+    //             }
+               
+    //             flyAni.style.marginTop = marTop + '%'
+                
+    //         }  
+    //     }
+    // }
+
     let frogShrink = () => {
         console.log('shrink check')
         let wid = 90
+    
         let shrink = () => {
+            console.log(wid)
             if (wid <= 90) {
                 wid--
                 document.getElementById('frog-img').style.maxWidth = wid + 'px'
@@ -119,19 +146,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 clearInterval(shrinkInterval)
             }
         }
-        let shrinkInterval = (shrink, 1000)
+        let shrinkInterval = setInterval(shrink, 100)
     }
 
-    // let flyBuzz = () => {
-    //     let flyAni = flies.children
-    //     let mar = flies.children.margin
-    //     let flying = () => {
-    //         if (mar > "")
-    //     }
-    // }
+    
 
     let introScene = () => { 
-        //animate flies to fly around       
+        //animate flies to fly around  
+        //flyBuzz()     
             if (clickCount === 0) {
                 frogText.innerText = introText[0]
                 clickCount++
@@ -175,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (clickCountFlies === 3) {
             frogText.innerText = flyText[3]
             flies.innerHTML = "<img id='black-circle' src='images/circle-cropped.png' alt='black circle'>"
-            sound2.pause()
+            flySound.pause()
             clickCountFlies++
             document.getElementById('black-circle').addEventListener('click', function() {
                 if (clickCountFlies === 4) {
@@ -217,10 +239,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 leaveTown()
             }
         })
-        frogAniRunning = false
+        frogJumpRunning = false
         switch (clickCountPond) {
             
             case 0:
+                drinkSound.play()
                 document.getElementById('frog-img').style.maxWidth = "200px"
                 document.getElementById('frog-img').style.margin = "28% 0 0 35%"
                 document.getElementById('pond-img').style.maxWidth = "450px"
@@ -229,6 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 clickCountPond++
             break;
             case 1:
+                drinkSound.play()
                 document.getElementById('frog-img').style.maxWidth = "400px"
                 document.getElementById('frog-img').style.margin = "15% 0 0 21%"
                 document.getElementById('pond-img').style.maxWidth = "100px"
@@ -237,13 +261,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 clickCountPond++
                 break;
             case 2:
+                drinkSound.pause()
                 frogText.innerText = pondText[2]
                 clickCountPond++
                 document.addEventListener('keydown', function(e) {
                     if (e.key == 'y') {
                         frogText.innerText = pondText[3]
                         document.getElementById('flies').style.visibility = "hidden"
-                        sound2.pause()
+                        flySound.pause()
                         clickCountPond++
                         loseGame()                                
                     } else if (e.key == 'n') {
@@ -264,11 +289,11 @@ document.addEventListener('DOMContentLoaded', function() {
    
 
     let leaveTown = () => {
-        frogAniRunning = false
+        frogJumpRunning = false
         frogShrink()
         document.getElementById('flies').removeEventListener('click', flySwarm)
         pond.removeEventListener('click', drinkWater)
-        sound2.pause()
+        flySound.pause()
         pond.style.visibility = "hidden"
         flies.style.visibility = "hidden"
         document.getElementById('tree-img').style.visibility = "hidden"
