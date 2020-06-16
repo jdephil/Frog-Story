@@ -1,5 +1,6 @@
 body {
     margin: 0 auto;
+    font-family: 'Architects Daughter', cursive;
 }
 
 h3 {
@@ -55,8 +56,9 @@ h3 {
 #dialogue {
     max-width: 400px;
     float: left;
-    margin-top: 15%;
+    margin-top: 10%;
     margin-left: 5%;
+    font-size: 24px;
 }
 
 #footer {

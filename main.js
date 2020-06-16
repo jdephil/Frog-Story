@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "This must END.", 
         "I can feel the weight of a million tiny bodies pressing upon me. But the silence! It settles in as they fill my ears with their unborn children. Finally...", 
         "Press 'y' to let the flies use frog as an incubator. Press 'n' to dive underwater in an attempt to shake them off.", 
-        "I see it now. My life's purpose is to serve you and become part of you, my flying friends. If we are together, I am never alone. Please use me as you will. I am finally free.", 
+        "I see it now. My life's purpose is to become part of you, my flying friends. If we are together, I am never alone. Please use me as you will. I am finally free.", 
         "No! The flies have climbed into my airways! I can't hold my breath for much longer. Is that...? Yes, I see Death swimming towards me."
     ]
     let pondText = [
@@ -38,7 +38,8 @@ document.addEventListener('DOMContentLoaded', function() {
         "No, I cannot bear the thought. What kind of king destroys his kingdom? The sun is warm, the water is cool, and I am grateful."
     ]
    
-
+    let flyArray = [
+        'fly-img1', 'fly-img2', 'fly-img3', 'fly-img4', 'fly-img5']
     
 
     /*---Functions---*/
@@ -73,9 +74,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('footer').style.visibility = 'visible'
         flySound.play()
         frogJump()
-        flyJump()
+        multiFlyJump()
         document.getElementById('frog-img').addEventListener('click', introScene)
-        document.querySelector('h3').innerText = ''
+        document.querySelector('h3').innerText = 'Click frog'
        
     }
 
@@ -110,39 +111,59 @@ document.addEventListener('DOMContentLoaded', function() {
    let si = setInterval(jump, 100)
 }
 
-let flyJump = () => {
-    let flyAni = document.getElementById('fly-img1')
+let flyJump = (fly) => {
+   
+    let flyAni = document.getElementById(fly)
+    console.log(fly)
+   
     let gravity = false
-    frogJumpRunning = true
-    let flyRand = (Math.random() * 5) + 1
-    let marTop = flyAni.style.marginTop
+    let marTop = window.getComputedStyle(flyAni).getPropertyValue('margin-top')
     let marTopNum = Number(marTop.replace('px', ''))
+    console.log('this is margin', marTop)
+    let horiz = false
+    let marLeft = window.getComputedStyle(flyAni).getPropertyValue('margin-left')
+    let marLeftNum = Number(marLeft.replace('px', ''))
     let jump = () => {
-        if (frogJumpRunning === true) {
-        if (marTopNum >= 20 && gravity === false) {
-            marTopNum--
-            flyAni.style.marginTop = marTopNum + '%'
-        } else if (marTopNum <= 20 && gravity === false) {
+        
+        if (marTopNum >= 420 && gravity === true) {
+            marTopNum = 419
+            gravity = false
+            flyAni.style.marginTop = marTopNum + 'px'
+        } else if (marTopNum <= 340 && gravity === false) {
             gravity = true
-        } else if (gravity === true && marTopNum <= 25) {
+            marTopNum = 341
+            flyAni.style.marginTop = marTopNum + 'px' 
+        } else if (gravity === true && marTopNum > 340) {
             marTopNum++
-            if (marTopNum >= 25) {
-                marTopNum = 25
-                gravity = false
-            }
-           
-            flyAni.style.marginTop = marTopNum + '%'
-            
-        }  
-    } else {
-        return null
-    }
-    
+            flyAni.style.marginTop = marTopNum + 'px' 
+        }  else if (gravity === false && marTopNum < 420) {
+            marTopNum--
+            flyAni.style.marginTop = marTopNum + 'px' 
+        }
+
+        // if (marLeftNum <= 70 && horiz === false) {
+        //     marLeftNum++
+        //     flyAni.style.marginLeft = marLeftNum + 'px'
+        // } else if (marLeftNum >= 70 && horiz === false) {
+        //     horiz = true
+        // } else if (marLeftNum >= 65 && horiz === true) {
+        //     marLeftNum--
+        //     if (marLeftNum <= 65) {
+        //         marLeftNum = 65
+        //         horiz = false
+        //     }
+        //     flyAni.style.marginLeft = marLeftNum + 'px' 
+        // }  
    }
    let si = setInterval(jump, 100)
 }
 
-  
+  let multiFlyJump = () => {
+    for (var i = 0; i < flyArray.length; i++) {
+        flyJump(flyArray[i])
+       
+    }
+  }
 
     let frogShrink = () => {
         console.log('shrink check')
@@ -162,7 +183,8 @@ let flyJump = () => {
 
     
 
-    let introScene = () => {          
+    let introScene = () => {   
+        document.querySelector('h3').innerText = ''       
             if (clickCount === 0) {
                 frogText.innerText = introText[0]
                 clickCount++
@@ -194,18 +216,22 @@ let flyJump = () => {
         if (clickCountFlies === 0) {
             frogText.innerText = flyText[0]
             flies.innerHTML += "<img class='flyImgs imgs' id='fly-img6' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img7' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img8' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img9' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img10' src='images/fly1.png' alt='Fly Image'>"
+            flyArray.push("fly-img6", "fly-img7", "fly-img8", "fly-img9", "fly-img10")
             clickCountFlies++
         } else if (clickCountFlies === 1) {
             frogText.innerText = flyText[1]
             flies.innerHTML += "<img class='flyImgs imgs' id='fly-img11' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img12' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img13' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img14' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img15' src='images/fly1.png' alt='Fly Image'>"
+            flyArray.push("fly-img11", "fly-img12", "fly-img13", "fly-img14", "fly-img15")
             clickCountFlies++
         } else if (clickCountFlies === 2) {
             frogText.innerText = flyText[2]
             flies.innerHTML += "<img class='flyImgs imgs' id='fly-img16' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img17' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img18' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img19' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img20' src='images/fly1.png' alt='Fly Image'>"
+            flyArray.push()
             clickCountFlies++
         } else if (clickCountFlies === 3) {
             frogText.innerText = flyText[3]
             flies.innerHTML = "<img id='black-circle' src='images/circle-cropped.png' alt='black circle'>"
+            flyArray.push("fly-img16", "fly-img17", "fly-img18", "fly-img19", "fly-img20")
             flySound.pause()
             clickCountFlies++
             document.getElementById('black-circle').addEventListener('click', function() {
