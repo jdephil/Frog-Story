@@ -4,6 +4,7 @@ About this Game:
 A choose-your-own-adventure style game about a frog that has lived alone in the same pond his whole life and is very tired. The game will start out with a frog in a pond, a tree, and some flies buzzing. Click the frog to start the game. There will be a few different options to choose the frog's future decisions (ex. eat the flies, find another pond). Some choices will keep the story moving, some choices will end the story and you lose.
 
 Wireframe
+<br>
 <img src='images/IMG_7594.jpg'>
 <img src='images/IMG_7595.jpg'>
 

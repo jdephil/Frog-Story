@@ -9,7 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let drinkSound = document.getElementById('drink-sound')
    
 
-    /*---Game logic---*/
+    /*---Game Logic---*/
+
     let gameOver = false
     let clickCount = 0
     let clickCountFlies = 0
@@ -42,15 +43,17 @@ document.addEventListener('DOMContentLoaded', function() {
         'fly-img1', 'fly-img2', 'fly-img3', 'fly-img4', 'fly-img5']
     
 
-    /*---Functions---*/
+    /*---FUNCTIONS---*/
 
-    
-    document.addEventListener('keydown', function(e) {
+    let spaceBarDown = (e) => {
         if (e.keyCode === 32) {
             init();
         }
-    })
+    }
+    
+    document.addEventListener('keydown', spaceBarDown)
 
+   
     
     let winGame = () => {
         document.querySelector('h3').innerText = "You win! Play again?"
@@ -80,6 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
        
     }
 
+
+/*---- ANIMATIONS ----*/
 
    let frogJump = () => {
     let frogAni = document.getElementById('frog-img')
@@ -185,9 +190,10 @@ let flyJump = (fly) => {
         let shrinkInterval = setInterval(shrink, 100)
     }
 
-    
+    /*--- STAGES ---*/
 
     let introScene = () => {   
+        document.removeEventListener('keydown', spaceBarDown)
         document.querySelector('h3').innerText = ''       
             if (clickCount === 0) {
                 frogText.innerText = introText[0]
@@ -200,11 +206,12 @@ let flyJump = (fly) => {
                 clickCount++
                 document.getElementById('flies').addEventListener('click', flySwarm)
                 pond.addEventListener('click', drinkWater)
-                document.addEventListener('keydown', function(e) {
+                let qDown = (e) => {
                     if (e.key == 'q') {
                         leaveTown()
                     }
-                })
+                }
+                document.addEventListener('keydown', qDown)
             }
     }
 
@@ -212,11 +219,7 @@ let flyJump = (fly) => {
 
     let flySwarm = () => {
         pond.removeEventListener('click', drinkWater)
-        document.removeEventListener('keydown', function(e) {
-            if (e.key == 'q') {
-                leaveTown()
-            }
-        })
+        document.removeEventListener('keydown', qDown)
         if (clickCountFlies === 0) {
             flySound.play()
             frogText.innerText = flyText[0]
@@ -278,14 +281,9 @@ let flyJump = (fly) => {
     let drinkWater = () => {
         
         document.getElementById('flies').removeEventListener('click', flySwarm)
-        document.removeEventListener('keydown', function(e) {
-            if (e.key == 'q') {
-                leaveTown()
-            }
-        })
+        document.removeEventListener('keydown', qDown)
         frogJumpRunning = false
         switch (clickCountPond) {
-            
             case 0:
                 drinkSound.play()
                 document.getElementById('frog-img').style.maxWidth = "200px"
@@ -327,7 +325,6 @@ let flyJump = (fly) => {
                 })
                 break;
             }
-        //add slurp sound
     }
 
    
@@ -342,7 +339,6 @@ let flyJump = (fly) => {
         flies.style.visibility = "hidden"
         document.getElementById('tree-img').style.visibility = "hidden"
         frogText.innerText = "I have been hopping for days. No food. No water. There is nothing out here. No one else. What is this empty place?"
-        //document.getElementById('frog-img').style.maxWidth = "20px"
         document.getElementById('frog-img').style.margin = "25% 0% 0% 50%"
         loseGame()
     }
