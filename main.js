@@ -53,7 +53,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     document.addEventListener('keydown', spaceBarDown)
 
-   
+    let qDown = (e) => {
+        if (e.key == 'q') {
+            leaveTown()
+        }
+    }
     
     let winGame = () => {
         document.querySelector('h3').innerText = "You win! Play again?"
@@ -193,7 +197,7 @@ let flyJump = (fly) => {
     /*--- STAGES ---*/
 
     let introScene = () => {   
-        document.removeEventListener('keydown', spaceBarDown)
+        //document.removeEventListener('keydown', spaceBarDown)
         document.querySelector('h3').innerText = ''       
             if (clickCount === 0) {
                 frogText.innerText = introText[0]
@@ -206,11 +210,7 @@ let flyJump = (fly) => {
                 clickCount++
                 document.getElementById('flies').addEventListener('click', flySwarm)
                 pond.addEventListener('click', drinkWater)
-                let qDown = (e) => {
-                    if (e.key == 'q') {
-                        leaveTown()
-                    }
-                }
+                
                 document.addEventListener('keydown', qDown)
             }
     }
