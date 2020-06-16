@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "This must END.", 
         "I can feel the weight of a million tiny bodies pressing upon me. But the silence! It settles in as they fill my ears with their unborn children. Finally...", 
         "Press 'y' to let the flies use frog as an incubator. Press 'n' to dive underwater in an attempt to shake them off.", 
-        "I see it now. My life's purpose is to become part of you, my flying friends. If we are together, I am never alone. Please use me as you will. I am finally free.", 
+        "I see it now. My life's purpose is to serve you and become part of you, my flying friends. If we are together, I am never alone. Please use me as you will. I am finally free.", 
         "No! The flies have climbed into my airways! I can't hold my breath for much longer. Is that...? Yes, I see Death swimming towards me."
     ]
     let pondText = [
@@ -120,7 +120,7 @@ let flyJump = (fly) => {
     let marTop = window.getComputedStyle(flyAni).getPropertyValue('margin-top')
     let marTopNum = Number(marTop.replace('px', ''))
     console.log('this is margin', marTop)
-    let horiz = false
+    let goingLeft = false
     let marLeft = window.getComputedStyle(flyAni).getPropertyValue('margin-left')
     let marLeftNum = Number(marLeft.replace('px', ''))
     let jump = () => {
@@ -141,21 +141,25 @@ let flyJump = (fly) => {
             flyAni.style.marginTop = marTopNum + 'px' 
         }
 
-        // if (marLeftNum <= 70 && horiz === false) {
-        //     marLeftNum++
-        //     flyAni.style.marginLeft = marLeftNum + 'px'
-        // } else if (marLeftNum >= 70 && horiz === false) {
-        //     horiz = true
-        // } else if (marLeftNum >= 65 && horiz === true) {
-        //     marLeftNum--
-        //     if (marLeftNum <= 65) {
-        //         marLeftNum = 65
-        //         horiz = false
-        //     }
-        //     flyAni.style.marginLeft = marLeftNum + 'px' 
-        // }  
+        if (marLeftNum >= 1190 && goingLeft === false) {
+            marLeftNum = 1189
+            goingLeft = true
+            flyAni.style.marginLeft = marLeftNum + 'px'
+        } else if (marLeftNum <= 1000 && goingLeft === true) {
+            goingLeft = false
+            marLeftNum = 1001
+            flyAni.style.marginLeft = marLeftNum + 'px' 
+        } else if (goingLeft === false && marLeftNum > 1000) {
+            marLeftNum++
+            flyAni.style.marginLeft = marLeftNum + 'px' 
+        }  else if (goingLeft === true && marLeftNum < 1190) {
+            marLeftNum--
+            flyAni.style.marginLeft = marLeftNum + 'px' 
+        }
+
+        
    }
-   let si = setInterval(jump, 100)
+   let si = setInterval(jump, 50)
 }
 
   let multiFlyJump = () => {
@@ -214,24 +218,29 @@ let flyJump = (fly) => {
             }
         })
         if (clickCountFlies === 0) {
+            flySound.play()
             frogText.innerText = flyText[0]
             flies.innerHTML += "<img class='flyImgs imgs' id='fly-img6' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img7' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img8' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img9' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img10' src='images/fly1.png' alt='Fly Image'>"
             flyArray.push("fly-img6", "fly-img7", "fly-img8", "fly-img9", "fly-img10")
+            multiFlyJump()
             clickCountFlies++
         } else if (clickCountFlies === 1) {
+            flySound.play()
             frogText.innerText = flyText[1]
             flies.innerHTML += "<img class='flyImgs imgs' id='fly-img11' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img12' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img13' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img14' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img15' src='images/fly1.png' alt='Fly Image'>"
             flyArray.push("fly-img11", "fly-img12", "fly-img13", "fly-img14", "fly-img15")
+            multiFlyJump()
             clickCountFlies++
         } else if (clickCountFlies === 2) {
+            flySound.play()
             frogText.innerText = flyText[2]
             flies.innerHTML += "<img class='flyImgs imgs' id='fly-img16' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img17' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img18' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img19' src='images/fly1.png' alt='Fly Image'><img class='flyImgs imgs' id='fly-img20' src='images/fly1.png' alt='Fly Image'>"
-            flyArray.push()
+            flyArray.push("fly-img16", "fly-img17", "fly-img18", "fly-img19", "fly-img20")
+            multiFlyJump()
             clickCountFlies++
         } else if (clickCountFlies === 3) {
             frogText.innerText = flyText[3]
             flies.innerHTML = "<img id='black-circle' src='images/circle-cropped.png' alt='black circle'>"
-            flyArray.push("fly-img16", "fly-img17", "fly-img18", "fly-img19", "fly-img20")
             flySound.pause()
             clickCountFlies++
             document.getElementById('black-circle').addEventListener('click', function() {
@@ -249,7 +258,7 @@ let flyJump = (fly) => {
                             document.addEventListener('keydown', function(e) {
                             if (e.key == 'y') {
                                 frogText.innerText = flyText[6]
-                                winGame()                                
+                                loseGame()                                
                             } else if (e.key == 'n') {
                                 frogText.innerText = flyText[7]
                                 loseGame()                                
