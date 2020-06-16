@@ -73,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('footer').style.visibility = 'visible'
         flySound.play()
         frogJump()
+        flyJump()
         document.getElementById('frog-img').addEventListener('click', introScene)
         document.querySelector('h3').innerText = ''
        
@@ -109,29 +110,39 @@ document.addEventListener('DOMContentLoaded', function() {
    let si = setInterval(jump, 100)
 }
 
-    // let flyBuzz = () => {
-    //     let flyAni = flies.flyImgs
-    //     let gravity = false
-    //     let marTop = flies.flyImgs.marginTop
-    //     let marLeft = flies.flyImgs.marginLeft
-    //     let flying = () => {
-    //         if (marTop > 20 && gravity === false) {
-    //             marTop--
-    //             flyAni.style.marginTop = marTop + '%'
-    //         } else if (pos <= 25 && gravity === false) {
-    //             gravity = true
-    //         } else if (gravity === true && marTop <= 32) {
-    //             marTop++
-    //             if (marTop >= 32) {
-    //                 marTop = 32
-    //                 gravity = false
-    //             }
-               
-    //             flyAni.style.marginTop = marTop + '%'
-                
-    //         }  
-    //     }
-    // }
+let flyJump = () => {
+    let flyAni = document.getElementById('fly-img1')
+    let gravity = false
+    frogJumpRunning = true
+    let flyRand = (Math.random() * 5) + 1
+    let marTop = flyAni.style.marginTop
+    let marTopNum = Number(marTop.replace('px', ''))
+    let jump = () => {
+        if (frogJumpRunning === true) {
+        if (marTopNum >= 20 && gravity === false) {
+            marTopNum--
+            flyAni.style.marginTop = marTopNum + '%'
+        } else if (marTopNum <= 20 && gravity === false) {
+            gravity = true
+        } else if (gravity === true && marTopNum <= 25) {
+            marTopNum++
+            if (marTopNum >= 25) {
+                marTopNum = 25
+                gravity = false
+            }
+           
+            flyAni.style.marginTop = marTopNum + '%'
+            
+        }  
+    } else {
+        return null
+    }
+    
+   }
+   let si = setInterval(jump, 100)
+}
+
+  
 
     let frogShrink = () => {
         console.log('shrink check')
@@ -151,9 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
 
-    let introScene = () => { 
-        //animate flies to fly around  
-        //flyBuzz()     
+    let introScene = () => {          
             if (clickCount === 0) {
                 frogText.innerText = introText[0]
                 clickCount++
